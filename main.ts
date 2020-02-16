@@ -27,3 +27,7 @@ input.onButtonPressed(Button.A, function () {
 })
 let countdown = 0
 basic.showIcon(IconNames.No)
+basic.forever(function () {
+    basic.showNumber(input.magneticForce(Dimension.Strength))
+    basic.showIcon(IconNames.SmallDiamond)
+})
