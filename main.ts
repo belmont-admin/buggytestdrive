@@ -1,33 +1,38 @@
-input.onButtonPressed(Button.B, function () {
-    forward(1000)
-})
-function forward (ms: number) {
-    basic.showIcon(IconNames.Yes)
-    basic.pause(1000)
-    basic.showArrow(ArrowNames.North)
-    pins.servoWritePin(AnalogPin.P1, 180)
-    pins.servoWritePin(AnalogPin.P2, 180)
-    basic.pause(2000)
+function countdown () {
+    start = 5
+    for (let index = 0; index < 5; index++) {
+        basic.showNumber(start)
+        basic.pause(500)
+        start += -1
+    }
+}
+function stop () {
     pins.servoWritePin(AnalogPin.P1, 90)
     pins.servoWritePin(AnalogPin.P2, 90)
-    basic.showIcon(IconNames.No)
+    basic.showIcon(IconNames.Happy)
+}
+function spin (ms: number) {
+    basic.showArrow(ArrowNames.East)
+    pins.servoWritePin(AnalogPin.P1, 180)
+    pins.servoWritePin(AnalogPin.P2, 180)
+    basic.pause(ms)
+    stop()
+}
+function forward (ms: number) {
+    basic.showArrow(ArrowNames.North)
+    pins.servoWritePin(AnalogPin.P1, 0)
+    pins.servoWritePin(AnalogPin.P2, 180)
+    basic.pause(ms)
+    stop()
 }
 input.onButtonPressed(Button.A, function () {
-    countdown = 5
-    for (let index = 0; index < 5; index++) {
-        basic.showNumber(countdown)
-        basic.pause(500)
-        countdown += -1
-    }
-    basic.showArrow(ArrowNames.North)
-    pins.servoWritePin(AnalogPin.P1, 180)
-    basic.pause(2000)
-    pins.servoWritePin(AnalogPin.P1, 90)
-    basic.showIcon(IconNames.No)
+    countdown()
+    forward(1000)
+    spin(500)
+    forward(1000)
+    forward(1000)
+    spin(500)
+    forward(1000)
 })
-let countdown = 0
-basic.showIcon(IconNames.No)
-basic.forever(function () {
-    basic.showNumber(input.magneticForce(Dimension.Strength))
-    basic.showIcon(IconNames.SmallDiamond)
-})
+let start = 0
+basic.showIcon(IconNames.Happy)
